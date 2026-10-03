@@ -1,0 +1,164 @@
+{
+  "stand": "Oktober 2026",
+  "hinweis": "Grundlage: bisherige NANNI-Speisekarte (simon09-prog.github.io/Caf-Fluffig). Mittagstisch, Waffel-Beschreibungen und Feta-Pancakes nach den neueren Aushängen auf Instagram (@nanni.coffee_bar, Aug./Sept. 2026).",
+  "kategorien": [
+    {
+      "id": "kaffee", "name": "Kaffee", "sub": "Langsam extrahiert, für den ruhigen Moment am Tresen", "img": "bilder/cappuccino.webp",
+      "items": [
+        { "name": "Espresso", "price": "2,90", "desc": "Einzelner Shot, kräftig und samtig." },
+        { "name": "Doppio", "price": "4,40", "desc": "Doppelter Espresso für den vollen Wachmacher." },
+        { "name": "Espresso Macchiato", "price": "3,30", "desc": "Espresso mit einem Hauch Milchschaum." },
+        { "name": "Café Crema", "price": "3,20", "desc": "Mild und langgezogen, nach italienischer Art." },
+        { "name": "Americano", "price": "3,50", "desc": "Espresso, verlängert mit heißem Wasser." },
+        { "name": "Cappuccino", "price": "3,90", "desc": "Espresso, heiße Milch, feiner Schaum." },
+        { "name": "Flat White", "price": "5,30", "desc": "Doppelter Espresso, samtiger Milchschaum." },
+        { "name": "Latte Macchiato", "price": "4,50", "desc": "Milch und Espresso, sanft geschichtet." },
+        { "name": "Milchkaffee", "price": "4,50", "desc": "Klassisch mild, mit viel Milch." }
+      ]
+    },
+    {
+      "id": "tee-matcha", "name": "Tee & Matcha", "sub": "Zeremoniell geschlagen, frisch aufgebrüht", "img": "bilder/matcha-mango.webp",
+      "items": [
+        { "name": "Earl Grey", "price": "3,50", "desc": "Schwarzer Tee mit Bergamotte." },
+        { "name": "Grüner Tee", "price": "3,50", "desc": "Mild und fein aromatisch." },
+        { "name": "Kamillentee", "price": "3,50", "desc": "Beruhigend, ideal zum Ausklang." },
+        { "name": "Frischer Minztee", "price": "4,20", "desc": "Frisch aufgebrühte Minzblätter." },
+        { "name": "Frischer Ingwer-Zitronen-Tee", "price": "4,20", "desc": "Wärmend, mit frischer Zitrusnote." },
+        { "name": "Matcha Hot", "price": "5,50", "desc": "Zeremoniell geschlagener Matcha, warm serviert.", "badge": "Special" },
+        { "name": "Iced Matcha", "price": "5,90", "desc": "Matcha auf Eis, cremig verrührt." },
+        { "name": "Strawberry Iced Matcha", "price": "6,50", "desc": "Iced Matcha mit Erdbeerpüree." },
+        { "name": "Mango Iced Matcha", "price": "6,50", "desc": "Iced Matcha mit Mangopüree." }
+      ]
+    },
+    {
+      "id": "signature-drinks", "name": "Signature Drinks", "sub": "Unsere Lieblinge, heiß und eisgekühlt", "img": null,
+      "items": [
+        { "name": "Iced Americano", "price": "3,90", "desc": "Espresso, Wasser, viel Eis." },
+        { "name": "Iced Latte", "price": "4,50", "desc": "Espresso, kalte Milch, Eiswürfel." },
+        { "name": "Iced Vanille Latte", "price": "5,20", "desc": "Iced Latte mit feiner Vanillenote." },
+        { "name": "Chai Latte", "price": "4,90", "desc": "Gewürztee mit heißer Milch." },
+        { "name": "Iced Chai Latte", "price": "4,90", "desc": "Chai Latte, eisgekühlt serviert." },
+        { "name": "Pumpkin Spice Latte", "price": "5,50", "desc": "Kürbisgewürz-Latte, warm und würzig." },
+        { "name": "Hot Chocolate", "price": "4,50", "desc": "Heiße Schokolade, cremig." },
+        { "name": "White Schoki", "price": "4,50", "desc": "Heiße weiße Schokolade." }
+      ]
+    },
+    {
+      "id": "frisch", "name": "Frisch gepresst", "sub": "Säfte, Smoothies und hausgemachte Limonade, 0,4 l", "img": "bilder/limo-karaffe.webp",
+      "items": [
+        { "name": "Frisch gepresster O-Saft", "price": "4,90", "desc": "Frisch gepresst, ohne Zusätze." },
+        { "name": "Beet & Juicy", "price": "6,50", "desc": "Rote Bete, kräftig und erdig." },
+        { "name": "Berry Banana Smoothie", "price": "6,50", "desc": "Beeren und Banane, cremig gemixt." },
+        { "name": "Green Glow Smoothie", "price": "6,50", "desc": "Grünes Blattgemüse mit Frucht." },
+        { "name": "Mango Sunshine Smoothie", "price": "6,50", "desc": "Mango, sonnig und süß." },
+        { "name": "Pfirsich-Limo", "price": "4,90", "desc": "Hausgemacht mit frischem Pfirsich." },
+        { "name": "Zitronen-Minze-Limo", "price": "6,00", "desc": "Erfrischend, mit frischer Minze." },
+        { "name": "Himbeer-Holunder-Limo", "price": "6,00", "desc": "Fruchtig-blumig, hausgemacht." },
+        { "name": "Maracuja-Limette-Limo", "price": "6,00", "desc": "Exotisch-säuerlich, hausgemacht." },
+        { "name": "Erdbeer-Basilikum-Limo", "price": "6,00", "desc": "Süß-würzig, hausgemacht." }
+      ]
+    },
+    {
+      "id": "soft", "name": "Softdrinks & Wasser", "sub": "Gekühlt aus der Flasche", "img": null,
+      "items": [
+        { "name": "Fritz-Kola", "price": "3,30", "desc": "Klassisch koffeinhaltig." },
+        { "name": "Fritz-Kola Super Zero", "price": "3,30", "desc": "Ohne Zucker, voller Geschmack." },
+        { "name": "Apfel-Kirsch-Holunder, 0,33 l", "price": "3,30", "desc": "Fruchtschorle, spritzig serviert." },
+        { "name": "Bio-Rhabarberschorle, 0,33 l", "price": "3,30", "desc": "Bio-Rhabarber, angenehm säuerlich." },
+        { "name": "Zurück zu den Quellen, still", "price": "3,50", "desc": "Stilles Wasser." },
+        { "name": "Zurück zu den Quellen, sprudelnd", "price": "3,50", "desc": "Spritziges Wasser." }
+      ]
+    },
+    {
+      "id": "fruehstueck", "name": "Frühstück", "sub": "Für den langsamen Start in den Tag", "img": "bilder/brunch-tisch.webp",
+      "items": [
+        { "name": "Rührei Genuss", "price": "7,90", "desc": "Cremiges Rührei mit Beilagen." },
+        { "name": "Sunny Morning", "price": "7,90", "desc": "Leichter Start mit Frischem." },
+        { "name": "Omelett Bar", "price": "8,90", "desc": "Omelett, nach deiner Wahl belegt." },
+        { "name": "Nannis Brunch", "price": "13,90", "desc": "Unser meistbestelltes Frühstück.", "badge": "Fan-Favorit" }
+      ]
+    },
+    {
+      "id": "bowls", "name": "Bowls, Pancakes & French Toast", "sub": "Süß, herzhaft und hausgemacht", "img": "bilder/french-toast.webp",
+      "note": "Der Teig der Süßkartoffel-Pancakes ist hausgemacht und vegan. Die Varianten wechseln, zuletzt gab es sie auch mit Halloumi oder vegan mit Tofu & Avocado.",
+      "items": [
+        { "name": "Classic Açaí Bowl", "price": "11,90", "desc": "Açaí mit Granola und frischem Obst." },
+        { "name": "Lotus Crunch Açaí Bowl", "price": "12,90", "desc": "Açaí mit Lotus-Keksen und Crunch." },
+        { "name": "Apfel Porridge", "price": "9,90", "desc": "Warmes Porridge mit Apfel." },
+        { "name": "Bananen Porridge", "price": "9,90", "desc": "Warmes Porridge mit Banane." },
+        { "name": "Classic French Toast", "price": "11,90", "desc": "Getoastetes Brot, karamellisiert, klassisch." },
+        { "name": "Lotus Shokupan French Toast", "price": "11,90", "desc": "Fluffiger Shokupan mit Lotus-Karamell." },
+        { "name": "Süßkartoffel-Pancakes mit Hähnchen", "price": "11,50", "desc": "Herzhafte Pancakes mit Hähnchen." },
+        { "name": "Süßkartoffel-Pancakes mit Lachs", "price": "11,50", "desc": "Herzhafte Pancakes mit Lachs." },
+        { "name": "Süßkartoffel-Pancakes mit Feta", "price": "11,50", "desc": "Rucola-Mix, Feta, Tomaten, Avocado, Granatapfelkerne und Balsamico.", "tags": ["veggie"] },
+        { "name": "Pancakes Klassik Berry", "price": "10,90", "desc": "Fluffige Pancakes mit Beeren." },
+        { "name": "Pancakes Lotus", "price": "10,90", "desc": "Fluffige Pancakes mit Lotus-Karamell." }
+      ]
+    },
+    {
+      "id": "shokupan", "name": "Shokupan Spezial", "sub": "Herzhaft belegt, warm serviert", "img": "bilder/club-sandwich.webp",
+      "callout": { "title": "Shokupan – fluffig, wie er sein soll", "text": "Unser japanisches Milchbrot wird täglich frisch gebacken: außen leicht geröstet, innen so weich, dass es beim ersten Bissen zusammenfällt." },
+      "items": [
+        { "name": "Halloumi Shokupan", "price": "11,90", "desc": "Gegrillter Halloumi auf fluffigem Shokupan." },
+        { "name": "Sucuk Shokupan", "price": "12,90", "desc": "Würzige Sucuk auf fluffigem Shokupan." },
+        { "name": "Burrata Shokupan", "price": "13,90", "desc": "Cremige Burrata auf fluffigem Shokupan." },
+        { "name": "Pastrami New York", "price": "13,90", "desc": "Pastrami, deftig auf Shokupan belegt." },
+        { "name": "Nanni Egg Drop", "price": "10,90", "desc": "Weiches Ei auf fluffigem Shokupan." }
+      ]
+    },
+    {
+      "id": "bagel", "name": "Bagel", "sub": "Frisch belegt", "img": null,
+      "items": [
+        { "name": "Avocado Kimchi Bagel", "price": "9,90", "desc": "Avocado und würziges Kimchi." },
+        { "name": "Halloumi Bagel", "price": "10,90", "desc": "Gegrillter Halloumi, warm serviert." },
+        { "name": "Sucuk Bagel", "price": "10,90", "desc": "Würzige Sucuk, herzhaft belegt." },
+        { "name": "Salmon Bagel", "price": "10,90", "desc": "Lachs, frisch belegt." },
+        { "name": "Bagel Egg", "price": "9,90", "desc": "Klassisch mit Ei belegt." },
+        { "name": "Smoky Tofu Bagel", "price": "8,90", "desc": "Geräucherter Tofu.", "tags": ["vegan"] }
+      ]
+    },
+    {
+      "id": "waffeln", "name": "Waffeln", "sub": "Immer ab 12 Uhr – der Teig ist hausgemacht und zu 100 % vegan", "img": null,
+      "items": [
+        { "name": "Classic Vegan", "price": "3,90", "desc": "Puderzucker.", "tags": ["vegan"] },
+        { "name": "Heiße Liebe", "price": "5,50", "desc": "Heiße Kirschen.", "tags": ["vegan"] },
+        { "name": "Peanut", "price": "5,90", "desc": "Erdnussbutter und Karamell." },
+        { "name": "Banana Choc", "price": "6,50", "desc": "Bananen, Chocodrops, Schokosauce." },
+        { "name": "Kirschtraum", "price": "6,90", "desc": "Heiße Kirschen, hausgemachte Mascarpone-Creme." },
+        { "name": "Lotus Crunch", "price": "7,50", "desc": "Frisches Apfelkompott, Lotus-Creme, Lotus Crumble.", "tags": ["vegan"] },
+        { "name": "Oreo Berry Banana", "price": "7,50", "desc": "Oreo-Crunch, Banane, Erdbeersauce." },
+        { "name": "White Bueno Crunch", "price": "7,90", "desc": "Weiße Schokosauce, Bueno-Sauce, gemahlene Haselnüsse, Bueno-Crunch.", "badge": "Neu" },
+        { "name": "Fruchttraum", "price": "8,90", "desc": "Bunte Früchte, Erdbeersauce.", "tags": ["vegan"] }
+      ]
+    },
+    {
+      "id": "mittag", "name": "Mittagstisch", "sub": "Lunch Deal Mo–Fr 11:30–14:30 Uhr – inklusive Tee, Kaffee oder hausgemachter Limo, auch to go", "img": "bilder/golden-goat.webp",
+      "note": "Das Topping auf den Süßkartoffel-Fries ist vegan – auf Basis von Hefeflocken, Kokosöl, Kartoffelstärke und geschälten roten Linsen.",
+      "items": [
+        { "name": "Chicken Karaage Burger", "price": "13,90", "desc": "Brioche Bun, Chicken Karaage, Romanasalat, Tomate, Cheddar-Melt, eingelegte rote Zwiebeln und Honey-Mustard-Sauce. Dazu Süßkartoffel mit veganem Reibe-Topping und Kräuterdip." },
+        { "name": "Avocado Halloumi Burger", "price": "13,90", "desc": "Brioche Bun, Avocado-Mash, Romanasalat, Tomate, Avocado, Halloumi, rote Zwiebeln, Kürbiskerne, Honig-Drizzle und hausgemachte Honig-Senf-Sauce. Dazu Süßkartoffel und Kräuterdip.", "tags": ["veggie"] },
+        { "name": "Golden Goat Club Sandwich", "price": "13,90", "desc": "Karamellisierter Ziegenkäse, Avocado, Tomaten, Rucola und Walnüsse auf knusprigem Brot. Dazu Süßkartoffel und Kräuterdip.", "tags": ["veggie"] },
+        { "name": "Gnocchi Pesto Burrata", "price": "14,90", "desc": "Goldbraun gebratene Gnocchi in cremiger Pesto-Sahnesauce mit Burrata, Rucola und Pinienkernen.", "tags": ["veggie"] }
+      ]
+    },
+    {
+      "id": "kuchen", "name": "Kuchen", "sub": "Hausgemacht, täglich wechselnd", "img": "bilder/lotus-torte.webp",
+      "items": [
+        { "name": "Kuchen, klein", "price": "3,50", "desc": "Kleines Stück, hausgemacht." },
+        { "name": "Kuchen", "price": "4,50", "desc": "Stück Kuchen, hausgemacht." },
+        { "name": "Kuchen, groß", "price": "5,20", "desc": "Großzügiges Stück, hausgemacht." },
+        { "name": "Veganer Kuchen", "price": "5,90", "desc": "Rein pflanzlich, hausgemacht.", "tags": ["vegan"] },
+        { "name": "Kuchen-Deal", "price": "6,00", "desc": "Kuchen plus Kaffee – jeden Montag von 12 bis 18 Uhr.", "badge": "Montag" }
+      ]
+    },
+    {
+      "id": "aperitif", "name": "Aperitif", "sub": "Für den Ausklang am Nachmittag", "img": null,
+      "items": [
+        { "name": "Aperol Spritz", "price": "7,50", "desc": "Aperol, Prosecco, Soda." },
+        { "name": "Lillet", "price": "7,50", "desc": "Lillet Blanc, spritzig serviert." },
+        { "name": "Sarti Spritz", "price": "7,50", "desc": "Sarti Rosa, als Spritz." },
+        { "name": "Limoncello Spritz", "price": "7,50", "desc": "Limoncello, spritzig-frisch." }
+      ]
+    }
+  ]
+}
