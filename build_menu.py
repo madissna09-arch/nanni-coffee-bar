@@ -15,7 +15,7 @@ menu = json.load(open(os.path.join(HERE, "menu.json"), encoding="utf-8"))
 cats = menu["kategorien"]
 
 # Kategorien ohne Foto bekommen ein Linien-Icon (Symbole stehen in beiden Seiten im <defs>-Block)
-ICON = {"signature-drinks": "i-iced", "soft": "i-bottle", "bagel": "i-bagel", "waffeln": "i-waffle", "aperitif": "i-spritz"}
+ICON = {"signature-drinks": "i-iced", "soft": "i-bottle", "bagel": "i-bagel", "waffeln": "i-waffle"}
 TAG = {"vegan": ("tag-vegan", "vegan"), "veggie": ("tag-veggie", "veggie")}
 
 e = lambda s: html.escape(s, quote=True)
