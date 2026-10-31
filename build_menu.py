@@ -15,8 +15,12 @@ menu = json.load(open(os.path.join(HERE, "menu.json"), encoding="utf-8"))
 cats = menu["kategorien"]
 
 # Kategorien ohne Foto bekommen ein Linien-Icon (Symbole stehen in beiden Seiten im <defs>-Block)
-ICON = {"signature-drinks": "i-iced", "soft": "i-bottle", "bagel": "i-bagel", "waffeln": "i-waffle"}
-TAG = {"vegan": ("tag-vegan", "vegan"), "veggie": ("tag-veggie", "veggie")}
+ICON = {"favourites": "i-iced", "fresh": "i-citrus", "soft": "i-bottle", "fruehstueck": "i-egg",
+        "bowls": "i-bowl", "bagels": "i-bagel", "waffeln": "i-waffle"}
+# Markierung -> (CSS-Klasse, Text, Icon)
+TAG = {"vegan": ("tag-vegan", "vegan", "i-leaf"), "veggie": ("tag-veggie", "veggie", "i-leaf"),
+       "vegan-opt": ("tag-vegan", "vegan möglich", "i-leaf"), "scharf": ("tag-hot", "scharf", "i-chili")}
+ADDONS = menu.get("addons", [])
 
 e = lambda s: html.escape(s, quote=True)
 
@@ -31,11 +35,20 @@ def thumb(c, size):
     return f'<span class="cat-thumb cat-icon"><svg aria-hidden="true"><use href="#{ICON.get(c["id"], "i-cup")}"/></svg></span>'
 
 
+def groups(c):
+    """Kategorie als Liste von (Ueberschrift, Positionen); ohne Untergruppen eine Gruppe ohne Titel."""
+    return [(g["title"], g["items"]) for g in c["groups"]] if c.get("groups") else [(None, c["items"])]
+
+
+def all_items(c):
+    return [it for _, items in groups(c) for it in items]
+
+
 def item_html(it):
     marks = ""
     for t in it.get("tags", []):
-        cls, label = TAG[t]
-        marks += f' <span class="tag {cls}"><svg aria-hidden="true"><use href="#i-leaf"/></svg>{label}</span>'
+        cls, label, icon = TAG[t]
+        marks += f' <span class="tag {cls}"><svg aria-hidden="true"><use href="#{icon}"/></svg>{label}</span>'
     if it.get("badge"):
         marks += f' <span class="tag tag-badge">{e(it["badge"])}</span>'
     desc = f'<p>{e(it["desc"])}</p>' if it.get("desc") else ""
@@ -47,16 +60,25 @@ def body_html(c):
     out = ""
     if c.get("callout"):
         out += (f'<div class="callout"><b>{e(c["callout"]["title"])}</b><p>{e(c["callout"]["text"])}</p></div>')
-    out += '<ul class="mi-list">' + "".join(item_html(it) for it in c["items"]) + "</ul>"
-    if c.get("note"):
-        out += f'<p class="cat-note">{e(c["note"])}</p>'
+    for title, items in groups(c):
+        if title:
+            out += f'<h5 class="mi-group">{e(title)}</h5>'
+        out += '<ul class="mi-list">' + "".join(item_html(it) for it in items) + "</ul>"
+    blocks = list(c.get("extras", []))
+    if c.get("addons"):
+        blocks.append({"title": "Add-ons", "items": ADDONS})
+    for b in blocks:
+        out += (f'<div class="extras"><b>{e(b["title"])}</b><ul>'
+                + "".join(f'<li>{e(n)} <span>+{p}&nbsp;€</span></li>' for n, p in b["items"]) + "</ul></div>")
+    if c.get("notes"):
+        out += '<ul class="cat-notes">' + "".join(f"<li>{e(n)}</li>" for n in c["notes"]) + "</ul>"
     return out
 
 
 # ---------- 1) Akkordeon fuer index.html ----------
 acc = []
 for i, c in enumerate(cats):
-    low = min(price_num(it["price"]) for it in c["items"])
+    low = min(price_num(it["price"]) for it in all_items(c))
     low_s = f"{low:.2f}".replace(".", ",")
     acc.append(
         f'<details class="cat" name="karte" id="k-{c["id"]}"{" open" if i == 0 else ""}>'
@@ -73,7 +95,7 @@ assert n == 1, "Marker in index.html nicht gefunden"
 open(idx_path, "w", encoding="utf-8").write(idx)
 
 # ---------- 2) karte.html ----------
-chips = "".join(f'<a href="#{c["id"]}">{e(c["name"])}</a>' for c in cats)
+chips = "".join(f'<a href="#{c["id"]}">{e(c.get("short", c["name"]))}</a>' for c in cats)
 sections = "".join(
     f'<section class="kcat" id="{c["id"]}"><header class="kcat-head">{thumb(c, 64)}'
     f'<div><h2>{e(c["name"])}</h2><p>{e(c["sub"])}</p></div></header>{body_html(c)}</section>'
@@ -97,7 +119,7 @@ ld = {
                     "suitableForDiet": {"vegan": "https://schema.org/VeganDiet", "veggie": "https://schema.org/VegetarianDiet"}.get((it.get("tags") or [None])[0]),
                     "offers": {"@type": "Offer", "price": f'{price_num(it["price"]):.2f}', "priceCurrency": "EUR"},
                 }.items() if v}
-                for it in c["items"]
+                for it in all_items(c)
             ],
         }
         for c in cats
@@ -111,4 +133,4 @@ page = (tpl.replace("{{CHIPS}}", chips)
            .replace("{{JSONLD}}", json.dumps(ld, ensure_ascii=False, indent=1)))
 open(os.path.join(HERE, "karte.html"), "w", encoding="utf-8").write(page)
 
-print(f"{len(cats)} Kategorien, {sum(len(c['items']) for c in cats)} Positionen -> index.html + karte.html")
+print(f"{len(cats)} Kategorien, {sum(len(all_items(c)) for c in cats)} Positionen -> index.html + karte.html")

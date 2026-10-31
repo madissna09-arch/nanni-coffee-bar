@@ -106,6 +106,18 @@ h1, h2, h4, p { margin: 0; }
 .callout b { display: block; font: italic 450 1.35rem/1.25 var(--serif); margin-bottom: 8px; }
 .callout p { font-size: .93rem; opacity: .9; max-width: 30em; margin: 0 auto; }
 .cat-note { margin-top: 10px; font-size: .88rem; color: var(--muted); background: var(--paper); border-radius: 12px; padding: 10px 14px; }
+.mi-group { font: 600 .7rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--rose); margin: 18px 0 2px; }
+.mi-group:first-child, .callout + .mi-group { margin-top: 6px; }
+.tag-hot { background: #f6ddd3; color: #b4462f; }
+.extras { margin-top: 16px; }
+.extras b { display: block; font: 600 .7rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--sage-deep); margin-bottom: 9px; }
+.extras ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.extras li { background: var(--chip, var(--cream)); border-radius: 999px; padding: 5px 11px; font-size: .86rem; }
+.extras li span { color: var(--sage-deep); font-weight: 500; margin-left: 3px; white-space: nowrap; }
+.cat-notes { list-style: none; margin: 14px 0 0; padding: 11px 14px; background: var(--chip, var(--cream)); border-radius: 12px; font-size: .88rem; color: var(--muted); display: grid; gap: 5px; }
+.cat-notes li { display: flex; gap: 9px; }
+.cat-notes li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--sage); flex: none; margin-top: .6em; }
+.k-main { --chip: var(--paper); }
 
 /* Fuss */
 .k-foot { width: var(--col); margin: 64px auto 0; padding: 30px 24px 26px; background: var(--espresso); color: #e9ddcf; border-radius: 28px 28px 0 0; font-size: .92rem; }
@@ -150,6 +162,10 @@ h1, h2, h4, p { margin: 0; }
     <symbol id="i-bagel" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="12" rx="9" ry="7.5"/><ellipse cx="12" cy="12" rx="2.6" ry="2"/><path d="M7 8.5l.5.6M15.8 7.6l.4.7M17.6 13.5l.6.4M6.4 14.2l.6-.3M11 17.6l.6.2" stroke-linecap="round"/></g></symbol>
     <symbol id="i-waffle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></g></symbol>
     <symbol id="i-spritz" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10c0 5-1.8 8.5-5 8.5S7 8 7 3Z"/><path d="M12 11.5V20M8.5 20.5h7M7.6 6.5h8.8"/><circle cx="16.5" cy="3.2" r="2"/></g></symbol>
+    <symbol id="i-citrus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="6"/><path d="M12 6v12M6 12h12M7.8 7.8l8.4 8.4M16.2 7.8l-8.4 8.4"/></g></symbol>
+    <symbol id="i-egg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3.2c3.8 0 7.2 6.2 7.2 10.3A7.2 7.2 0 0 1 4.8 13.5C4.8 9.4 8.2 3.2 12 3.2Z"/><circle cx="12" cy="14" r="3"/></g></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M8.5 20.5h7M8 11c.4-2 1.8-3 3.5-3M13 11c.3-2.4 2-3.8 4.5-3.4M10 8c-.2-1.6.5-3 2-3.8"/></g></symbol>
+    <symbol id="i-chili" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 7.5c2.6 1.4 3 5.4.2 8.6-2.7 3.1-7.3 4.6-11.2 4.2 3.4-1.7 5.7-4.4 6.8-8.2.8-2.8 2.5-5.6 4.2-4.6Z"/><path d="M15.5 7.5c.3-1.8 1.4-3.2 3-3.8"/></g></symbol>
     <symbol id="logo" viewBox="0 0 120 120"><circle cx="60" cy="60" r="60" fill="#9aae93"/><text x="60" y="58" text-anchor="middle" font-family="Jost, sans-serif" font-size="21" letter-spacing="3.4" fill="#fffaf3">NANNI</text><path d="M33 67h54" stroke="#fffaf3" stroke-width="1.2" opacity=".85"/><text x="60" y="80" text-anchor="middle" font-family="Jost, sans-serif" font-size="7.2" letter-spacing="2.2" fill="#fffaf3">COFFEE · BAR</text></symbol>
   </defs>
 </svg>
@@ -230,13 +246,13 @@ h1, h2, h4, p { margin: 0; }
 
   // Aktion des Tages
   const deals = {
-    1: ['Kuchentag', 'Kuchen + Kaffee für 6 € · 12–18 Uhr', '#kuchen'],
+    1: ['Kaffee & Kuchen Deal', 'Kuchen + Kaffee für 6 € · 12–18 Uhr', '#kaffee'],
     2: ['Studi-Dienstag', '10 % auf die Rechnung mit Studierendenausweis', '#kaffee'],
-    3: ['Lunch Deal', 'Mo–Fr 11:30–14:30 Uhr, Getränk inklusive', '#mittag'],
-    4: ['Lunch Deal', 'Mo–Fr 11:30–14:30 Uhr, Getränk inklusive', '#mittag'],
-    5: ['Lunch Deal', 'Mo–Fr 11:30–14:30 Uhr, Getränk inklusive', '#mittag'],
-    6: ['Waffel Specials', 'Ab 12 Uhr, der Teig ist zu 100 % vegan', '#waffeln'],
-    0: ['Waffel Specials', 'Ab 12 Uhr, der Teig ist zu 100 % vegan', '#waffeln']
+    3: ['Lunch Deal', 'Mo–Fr 11:30–14:30 Uhr, Getränk inklusive', '#lunch'],
+    4: ['Lunch Deal', 'Mo–Fr 11:30–14:30 Uhr, Getränk inklusive', '#lunch'],
+    5: ['Lunch Deal', 'Mo–Fr 11:30–14:30 Uhr, Getränk inklusive', '#lunch'],
+    6: ['Lunch schon ab 12 Uhr', 'Am Wochenende gibt es Nannis Lunch Favourites schon mittags', '#lunch'],
+    0: ['Lunch schon ab 12 Uhr', 'Am Wochenende gibt es Nannis Lunch Favourites schon mittags', '#lunch']
   };
   const t = document.getElementById('today');
   t.querySelector('.t-title').textContent = deals[today][0];
