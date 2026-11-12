@@ -29,6 +29,11 @@ def price_num(p):
     return float(p.replace(",", "."))
 
 
+def cents(p):
+    """Preis in Cent; data-n/data-p an Positionen und Extras liest bestellen.js (Bestellen am Tisch)."""
+    return round(price_num(p) * 100)
+
+
 def thumb(c, size):
     if c.get("img"):
         return f'<span class="cat-thumb"><img src="{c["img"]}" alt="" loading="lazy" width="{size}" height="{size}"></span>'
@@ -52,7 +57,7 @@ def item_html(it):
     if it.get("badge"):
         marks += f' <span class="tag tag-badge">{e(it["badge"])}</span>'
     desc = f'<p>{e(it["desc"])}</p>' if it.get("desc") else ""
-    return (f'<li class="mi"><div class="mi-top"><h4>{e(it["name"])}{marks}</h4>'
+    return (f'<li class="mi" data-n="{e(it["name"])}" data-p="{cents(it["price"])}"><div class="mi-top"><h4>{e(it["name"])}{marks}</h4>'
             f'<span class="mi-line" aria-hidden="true"></span><span class="mi-price">{it["price"]}&nbsp;€</span></div>{desc}</li>')
 
 
@@ -69,7 +74,7 @@ def body_html(c):
         blocks.append({"title": "Add-ons", "items": ADDONS})
     for b in blocks:
         out += (f'<div class="extras"><b>{e(b["title"])}</b><ul>'
-                + "".join(f'<li>{e(n)} <span>+{p}&nbsp;€</span></li>' for n, p in b["items"]) + "</ul></div>")
+                + "".join(f'<li data-n="{e(n)}" data-p="{cents(p)}">{e(n)} <span>+{p}&nbsp;€</span></li>' for n, p in b["items"]) + "</ul></div>")
     if c.get("notes"):
         out += '<ul class="cat-notes">' + "".join(f"<li>{e(n)}</li>" for n in c["notes"]) + "</ul>"
     return out

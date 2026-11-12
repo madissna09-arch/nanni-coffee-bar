@@ -276,5 +276,8 @@ h1, h2, h4, p { margin: 0; }
   addEventListener('scroll', () => top.classList.toggle('show', scrollY > 900), { passive: true });
 })();
 </script>
+<!-- Bestellen am Tisch: wird nur aktiv, wenn die Karte mit einem Tisch-Code (?t=...) geöffnet wird -->
+<script src="bestellen.config.js" defer></script>
+<script src="bestellen.js" defer></script>
 </body>
 </html>

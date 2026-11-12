@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tische &amp; QR-Codes – NANNI</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<style>
+@font-face { font-family: "Fraunces"; src: url("fonts/fraunces.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("fonts/jost.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+:root { --cream: #f7f0e6; --paper: #fffaf3; --sage: #9aae93; --sage-soft: #dfe6d9; --sage-deep: #4f6249; --blush-soft: #f8e7e1; --rose: #b05a62; --espresso: #33261f; --muted: #6d5d53; --line: #e4d8c8;
+  --serif: "Fraunces", Georgia, serif; --sans: "Jost", "Segoe UI", system-ui, sans-serif; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--espresso); font: 400 16.5px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, p { margin: 0; }
+[hidden] { display: none !important; }
+.wrap { width: min(1080px, 100% - 36px); margin: 0 auto; padding: 28px 0 60px; }
+.head { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 24px; }
+.head h1 { font: 430 2.3rem/1.05 var(--serif); margin-right: auto; }
+.head a { color: var(--sage-deep); text-underline-offset: 3px; }
+.lead { margin-top: 10px; color: var(--muted); max-width: 46em; }
+.tools { margin-top: 22px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.box { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; }
+.box b { display: block; font: 600 .72rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--sage-deep); margin-bottom: 10px; }
+.box p { font-size: .88rem; color: var(--muted); margin-top: 8px; }
+.line { display: flex; gap: 8px; }
+.line input { flex: 1; min-width: 0; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; padding: 9px 16px; }
+.line input:focus { outline: none; border-color: var(--sage-deep); }
+.btn { border: 0; border-radius: 999px; background: var(--sage-deep); color: #fff; padding: 9px 18px; font-weight: 500; white-space: nowrap; }
+.btn.alt { background: var(--cream); color: var(--espresso); border: 1px solid var(--line); }
+.msg { margin-top: 14px; background: var(--blush-soft); color: #8a3940; border-radius: 12px; padding: 10px 14px; }
+
+.laden { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: var(--espresso); color: var(--paper); border-radius: 22px; padding: 20px 22px; }
+.laden .qr { width: 150px; height: 150px; background: #fff; padding: 10px; border-radius: 14px; flex: none; }
+.laden .qr svg { width: 100%; height: 100%; display: block; }
+.laden > div:last-child { flex: 1; min-width: 240px; }
+.laden b { font: 450 1.5rem/1.15 var(--serif); }
+.laden p { margin-top: 6px; font-size: .9rem; opacity: .85; }
+.laden .url { font-family: ui-monospace, Consolas, monospace; font-size: .85rem; opacity: 1; overflow-wrap: anywhere; background: rgba(255, 255, 255, .1); border-radius: 10px; padding: 8px 12px; margin-top: 10px; }
+.laden .acts { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+.laden .btn { background: var(--sage); color: var(--espresso); }
+.laden .btn.alt { background: transparent; color: var(--paper); border-color: rgba(255, 255, 255, .3); }
+.tisch .ort { font: 600 .68rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: 5px; min-height: .7rem; }
+.grid { margin-top: 26px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.tisch { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px 14px; text-align: center; break-inside: avoid; }
+.tisch .logo { font: 500 .72rem/1 var(--sans); letter-spacing: .3em; color: var(--sage-deep); }
+.tisch h2 { font: 450 1.9rem/1.1 var(--serif); margin-top: 8px; }
+.tisch .qr { width: 170px; height: 170px; margin: 12px auto 10px; }
+.tisch .qr svg { width: 100%; height: 100%; display: block; }
+.tisch .cta { font-weight: 500; }
+.tisch .sub { font-size: .84rem; color: var(--muted); }
+.tisch .acts { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.tisch .acts button { border: 1px solid var(--line); background: var(--cream); border-radius: 999px; padding: 5px 12px; font-size: .84rem; }
+.tisch .acts button.del { color: var(--rose); }
+.empty { margin-top: 26px; color: var(--muted); }
+
+@media print {
+  @page { margin: 12mm; }
+  body { background: #fff; }
+  .wrap { width: 100%; padding: 0; }
+  .head, .lead, .tools, .msg, .laden, .tisch .acts { display: none !important; }
+  .grid { margin: 0; grid-template-columns: repeat(3, 1fr); gap: 8mm; }
+  .tisch { border: 1px dashed #b9ab9c; border-radius: 6mm; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>Tische &amp; QR-Codes</h1>
+    <a href="theke.html">Zur Theke</a>
+  </div>
+  <p class="lead">Der QR-Code ist auf allen Stickern gleich: Er öffnet die Karte, und der Gast tippt vor dem Abschicken seine Tischnummer an. Jeder Tisch hat zusätzlich einen eigenen Link für den NFC-Chip; wer das Handy an den Chip hält, muss keinen Tisch mehr wählen.</p>
+  <p class="msg" id="msg" hidden></p>
+
+  <div class="laden" id="laden" hidden>
+    <div class="qr" id="laden-qr"></div>
+    <div>
+      <b>Ein QR-Code für alle Sticker</b>
+      <p class="url" id="laden-url"></p>
+      <p>Auf diesen Link stellt ihr den QR-Code der Sticker um. Der Gast wählt seinen Tisch dann selbst.</p>
+      <div class="acts"><button type="button" class="btn" id="laden-copy">Link kopieren</button><button type="button" class="btn alt" id="laden-neu">Neuer Code</button></div>
+    </div>
+  </div>
+
+  <div class="tools" id="tools">
+    <div class="box">
+      <b>Tisch anlegen</b>
+      <form class="line" id="add"><input id="name" maxlength="30" placeholder="Nummer" autocomplete="off" style="flex:.7"><input id="bereich" maxlength="30" placeholder="Bereich" list="bereiche" autocomplete="off"><button class="btn">Anlegen</button></form>
+      <datalist id="bereiche"><option value="Drinnen"><option value="Draußen"></datalist>
+      <p>Nummer und Bereich stehen später bei jeder Bestellung an der Theke.</p>
+    </div>
+    <div class="box">
+      <b>Mehrere auf einmal</b>
+      <form class="line" id="many"><input id="bis" type="number" min="1" max="60" placeholder="Anzahl" style="flex:.7"><input id="bis-bereich" maxlength="30" placeholder="Bereich" list="bereiche" autocomplete="off"><button class="btn">Anlegen</button></form>
+      <p>Legt die Tische 1 bis Anzahl in diesem Bereich an; vorhandene werden übersprungen.</p>
+    </div>
+    <div class="box">
+      <b>Adresse der Karte</b>
+      <div class="line"><input id="base" spellcheck="false"><button class="btn alt" type="button" id="print">Drucken</button></div>
+      <p>Auf diese Adresse zeigen alle Links. Drucken braucht ihr nur, wenn doch jeder Tisch einen eigenen QR-Code bekommen soll.</p>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>Noch keine Tische angelegt.</p>
+</div>
+
+<script src="bestellen.config.js"></script>
+<script src="qrcode.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let KEY = null; try { KEY = localStorage.getItem('nanni-theke-key'); } catch {}
+  const say = t => { $('msg').textContent = t; $('msg').hidden = !t; };
+  if (!KEY) { $('tools').hidden = true; return say('Zugang fehlt. Öffnet zuerst einmal die Theke über den Theken-Link, danach funktioniert diese Seite auf diesem Gerät.'); }
+
+  const LIVE = 'https://madissna09-arch.github.io/nanni-coffee-bar/karte.html';
+  const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+  $('base').value = local ? new URL('karte.html', location.href).href : LIVE;
+  const link = t => $('base').value.trim() + '?t=' + encodeURIComponent(t.code);
+  let ladenCode = '';
+
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') n.className = v; else if (k === 'text') n.textContent = v;
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v); else n.setAttribute(k, v);
+    }
+    n.append(...kids.flat().filter(Boolean));
+    return n;
+  };
+  const qrSvg = text => { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); };
+  const qr = text => { const d = el('div', { class: 'qr' }); d.innerHTML = qrSvg(text); return d; };
+  const copy = async (btn, text) => { try { await navigator.clipboard.writeText(text); btn.textContent = 'Kopiert'; setTimeout(() => { btn.textContent = 'Link kopieren'; }, 1500); } catch { prompt('Link', text); } };
+  const voll = t => 'Tisch ' + t.name + (t.bereich ? ' (' + t.bereich + ')' : '');
+
+  let tische = [];
+  const call = async (fn, args) => {
+    try {
+      const res = await NANNI.rpc(fn, { p_key: KEY, ...args });
+      if (!res.ok && res.fehler === 'key') say('Der Zugang gilt nicht mehr. Öffnet die Theke bitte über den aktuellen Theken-Link.');
+      return res;
+    } catch { say('Keine Verbindung. Versucht es gleich noch einmal.'); return { ok: false }; }
+  };
+  async function load() {
+    const res = await call('theke_tische', {});
+    if (!res.ok) return;
+    tische = res.tische; ladenCode = res.laden_code; render();
+  }
+  function render() {
+    $('empty').hidden = tische.length > 0;
+    const ll = link({ code: ladenCode });
+    $('laden').hidden = false; $('laden-url').textContent = ll; $('laden-qr').innerHTML = qrSvg(ll);
+    $('grid').replaceChildren(...tische.map(t => el('article', { class: 'tisch' },
+      el('div', { class: 'logo', text: 'NANNI' }),
+      el('h2', { text: 'Tisch ' + t.name }),
+      el('div', { class: 'ort', text: t.bereich }),
+      qr(link(t)),
+      el('div', { class: 'cta', text: 'Scannen und bestellen' }),
+      el('div', { class: 'sub', text: 'Link für den NFC-Chip dieses Tisches' }),
+      el('div', { class: 'acts' },
+        el('button', { type: 'button', text: 'Link kopieren', onclick: ev => copy(ev.target, link(t)) }),
+        el('button', { type: 'button', text: 'Neuer Code', onclick: async () => { if (confirm('Neuen Code für ' + voll(t) + ' erzeugen? Der bisherige NFC-Link dieses Tisches funktioniert danach nicht mehr.')) { await call('theke_tisch_neuer_code', { p_id: t.id }); load(); } } }),
+        el('button', { type: 'button', class: 'del', text: 'Löschen', onclick: async () => { if (confirm(voll(t) + ' löschen?')) { await call('theke_tisch_loeschen', { p_id: t.id }); load(); } } })))));
+  }
+
+  $('add').addEventListener('submit', async ev => {
+    ev.preventDefault(); say('');
+    const name = $('name').value.trim(); if (!name) return;
+    const res = await call('theke_tisch_anlegen', { p_name: name, p_bereich: $('bereich').value.trim() });
+    if (res.ok) $('name').value = ''; else if (res.fehler === 'doppelt') say('Diesen Tisch gibt es in dem Bereich schon.');
+    load();
+  });
+  $('many').addEventListener('submit', async ev => {
+    ev.preventDefault(); say('');
+    const n = Math.min(60, +$('bis').value || 0);
+    for (let i = 1; i <= n; i++) await call('theke_tisch_anlegen', { p_name: String(i), p_bereich: $('bis-bereich').value.trim() });
+    $('bis').value = ''; load();
+  });
+  $('base').addEventListener('input', render);
+  $('print').addEventListener('click', () => print());
+  $('laden-copy').addEventListener('click', ev => copy(ev.target, link({ code: ladenCode })));
+  $('laden-neu').addEventListener('click', async () => {
+    if (!confirm('Neuen Code für den gemeinsamen QR-Link erzeugen? Der bisherige Link funktioniert danach nicht mehr; der QR-Code der Sticker muss dann auf den neuen Link umgestellt werden.')) return;
+    await call('theke_laden_code_neu', {}); load();
+  });
+  load();
+})();
+</script>
+</body>
+</html>
