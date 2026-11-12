@@ -7,7 +7,16 @@
 (() => {
   const code = new URLSearchParams(location.search).get('t');
   if (!code || !window.NANNI) return;
-  NANNI.rpc('tisch_info', { p_code: code }).then(info => { if (info && info.ok) start(info); }).catch(() => {});
+  NANNI.rpc('tisch_info', { p_code: code }).then(info => { if (info && info.ok) start(info); else hinweis('Dieser Bestell-Link ist nicht mehr gültig.'); })
+    .catch(() => hinweis('Bestellen am Handy ist gerade nicht erreichbar. Bestellt bitte direkt bei uns.'));
+  // Mit Code im Link, aber ohne Verbindung zur Bestellung: kurz sagen, statt still die Lesekarte zu zeigen
+  function hinweis(text) {
+    const p = document.createElement('p');
+    p.textContent = text;
+    p.style.cssText = 'margin:14px auto 0;max-width:30em;padding:10px 16px;border-radius:14px;background:#fff3c4;color:#5b4700;font-size:.92rem';
+    const s = document.getElementById('status');
+    if (s) s.after(p);
+  }
 
   const euro = c => (c / 100).toFixed(2).replace('.', ',') + ' €';
   const el = (tag, attrs = {}, ...kids) => {
