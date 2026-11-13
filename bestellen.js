@@ -63,7 +63,7 @@
     document.body.append(dock);
 
     if (!info.aktiv) {
-      document.querySelector('.k-hero').append(el('div', { class: 'bst-pause' }, el('b', { text: 'Bestellen am Handy ist gerade pausiert.' }), 'Bestellt bitte direkt bei uns an der Theke.'));
+      document.querySelector('.k-hero').append(el('div', { class: 'bst-pause' }, el('b', { text: 'Bestellen am Handy ist gerade pausiert.' }), 'Bestellt bitte direkt bei uns.'));
     } else {
       document.querySelectorAll('.kcat').forEach(sec => {
         const extras = [...sec.querySelectorAll('.extras li[data-n]')].map(li => ({ name: li.dataset.n, cent: +li.dataset.p }));
@@ -174,10 +174,10 @@
             name: l.name, menge: l.menge, preis_cent: l.cent, notiz: l.notiz, extras: l.extras.map(x => ({ name: x.name, preis_cent: x.cent })) })) });
         } catch { return fail('Keine Verbindung. Prüft kurz euer Netz und versucht es noch einmal.'); }
         if (!res.ok) {
-          return fail({ pausiert: 'Bestellen am Handy ist gerade pausiert. Bestellt bitte an der Theke.',
+          return fail({ pausiert: 'Bestellen am Handy ist gerade pausiert. Bestellt bitte direkt bei uns.',
             zuviele: 'Von eurem Tisch warten schon Bestellungen bei uns. Einen Moment, wir sind gleich so weit.',
             tisch: 'Dieser Tisch-Link gilt nicht mehr. Scannt den Code am Tisch bitte noch einmal.' }[res.fehler]
-            || 'Das hat nicht geklappt. Bestellt bitte an der Theke.');
+            || 'Das hat nicht geklappt. Bestellt bitte direkt bei uns.');
         }
         orders.unshift({ id: res.id, nr: res.nr, ts: Date.now(), status: 'neu', summe: res.summe_cent, tisch: label(tisch),
           zeilen: cart.map(l => ({ menge: l.menge, name: l.name, detail: detail(l) })) });

@@ -104,7 +104,7 @@ h1, h2, p { margin: 0; }
   <a href="tische.html">Tische &amp; QR-Codes</a>
 </header>
 <div class="warn" id="warn-net" hidden>Keine Verbindung. Neue Bestellungen kommen gerade nicht an. Prüft das WLAN.</div>
-<div class="warn soft" id="warn-off" hidden>Bestellen am Handy ist pausiert. Gäste sehen den Hinweis, an der Theke zu bestellen.</div>
+<div class="warn soft" id="warn-off" hidden>Bestellen am Handy ist pausiert. Gäste sehen den Hinweis, direkt bei euch zu bestellen.</div>
 
 <main class="board">
   <section class="col neu" id="col-neu"><header><h2>Neu</h2><span>0</span></header><div class="list"></div></section>
@@ -146,7 +146,7 @@ h1, h2, p { margin: 0; }
 
   let orders = [], aktiv = true, skew = 0, started = false;
   const seen = new Set();
-  let first = true, lastDing = 0, fails = 0;
+  let first = true, fails = 0;
 
   $('go').addEventListener('click', () => { gate.hidden = true; started = true; ding(); keepAwake(); });
 
@@ -210,8 +210,8 @@ h1, h2, p { margin: 0; }
       const neu = orders.filter(o => o.status === 'neu');
       const fresh = neu.filter(o => !seen.has(o.id));
       orders.forEach(o => seen.add(o.id));
-      // Ton bei jeder neuen Bestellung, danach alle 20 Sekunden, solange etwas unangenommen wartet
-      if (started && ((fresh.length && !first) || (neu.length && Date.now() - lastDing > 20e3))) { ding(); lastDing = Date.now(); }
+      // Ton genau einmal je neuer Bestellung. Was laenger wartet, wird nur farbig markiert (Karte "late").
+      if (started && fresh.length && !first) ding();
       first = false;
       render();
     } catch { if (++fails >= 2) online(false); }
@@ -227,7 +227,7 @@ h1, h2, p { margin: 0; }
 
   $('sw').addEventListener('click', async () => {
     const next = !aktiv;
-    if (!next && !confirm('Bestellen am Handy pausieren? Gäste können dann nur noch an der Theke bestellen, bis ihr es wieder einschaltet.')) return;
+    if (!next && !confirm('Bestellen am Handy pausieren? Gäste können dann nur noch direkt bei euch bestellen, bis ihr es wieder einschaltet.')) return;
     aktiv = next; render();
     try { await NANNI.rpc('theke_aktiv', { p_key: KEY, p_aktiv: next }); } catch { online(false); }
     tick();
