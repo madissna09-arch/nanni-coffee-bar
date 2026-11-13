@@ -73,6 +73,37 @@ h1, h2, p { margin: 0; }
 .fertig .sum { display: none; }
 .fertig .acts button { padding: 8px 12px; font-size: .9rem; background: var(--cream); color: var(--espresso); }
 
+/* Umschalter Bestellungen / Karte */
+.views { display: inline-flex; background: rgba(255, 255, 255, .1); border-radius: 999px; padding: 4px; gap: 4px; }
+.views button { border: 0; background: transparent; color: var(--paper); border-radius: 999px; padding: 9px 18px; font-size: .95rem; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+.views button[aria-selected="true"] { background: var(--paper); color: var(--espresso); }
+.views button span { font: 600 .78rem/1 var(--sans); background: var(--line); color: var(--espresso); border-radius: 999px; padding: 4px 8px; font-variant-numeric: tabular-nums; }
+.views button span.neu { background: var(--amber); color: #fff; }
+
+/* Ansicht Karte: Positionen als "heute aus" markieren */
+.menu { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px calc(24px + env(safe-area-inset-bottom)); }
+.menu-head { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.menu-head input { flex: 1 1 320px; min-width: 0; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; padding: 14px 22px; font: inherit; font-size: 1.05rem; color: inherit; }
+.menu-head input:focus { outline: none; border-color: var(--sage-deep); }
+.menu-head p { flex: 1 1 260px; color: var(--muted); font-size: .93rem; }
+.aus-leiste { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; align-items: center; }
+.aus-leiste b { font: 600 .74rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--rose); margin-right: 4px; }
+.aus-leiste button { border: 1.5px solid var(--rose); background: var(--blush-soft); color: #7c3138; border-radius: 999px; padding: 10px 16px; font-weight: 500; }
+.mcat { margin-top: 22px; }
+.mcat h2 { font: 600 .78rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 0 4px 10px; }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 10px; }
+.item { display: flex; align-items: center; gap: 14px; min-height: 64px; width: 100%; text-align: left; border: 1px solid var(--line); background: var(--paper); border-radius: 18px; padding: 12px 16px; }
+.item .n { flex: 1; font-weight: 500; overflow-wrap: anywhere; }
+.item .s { font-size: .88rem; color: var(--sage-deep); white-space: nowrap; }
+.item .knob { width: 52px; height: 30px; border-radius: 999px; background: #6fbf7b; position: relative; flex: none; transition: background-color .2s; }
+.item .knob::after { content: ""; position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transform: translateX(22px); transition: transform .2s; }
+.item[aria-checked="false"] { background: var(--blush-soft); border-color: var(--rose); }
+.item[aria-checked="false"] .n { color: #7c3138; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.item[aria-checked="false"] .s { color: var(--rose); font-weight: 600; }
+.item[aria-checked="false"] .knob { background: #b9aaa0; }
+.item[aria-checked="false"] .knob::after { transform: none; }
+.item:active { transform: scale(.99); }
+
 .gate { position: fixed; inset: 0; z-index: 10; background: var(--espresso); color: var(--paper); display: grid; place-items: center; padding: 24px; text-align: center; }
 .gate div { max-width: 26em; }
 .gate h2 { font: 420 2.4rem/1.1 var(--serif); }
@@ -99,9 +130,14 @@ h1, h2, p { margin: 0; }
 
 <header class="top">
   <h1>NANNI <small>Theke</small></h1>
+  <div class="views" role="tablist">
+    <button type="button" role="tab" id="v-best" aria-selected="true">Bestellungen <span id="v-best-n" hidden>0</span></button>
+    <button type="button" role="tab" id="v-karte" aria-selected="false">Karte <span id="v-karte-n" hidden>0</span></button>
+  </div>
   <span class="net" id="net"><i></i><span>Verbunden</span></span>
   <button class="sw" id="sw" type="button" role="switch" aria-checked="true"><span class="knob"></span><span id="sw-text">Bestellen am Handy ist an</span></button>
   <a href="tische.html">Tische &amp; QR-Codes</a>
+  <a href="auswertung.html">Auswertung</a>
 </header>
 <div class="warn" id="warn-net" hidden>Keine Verbindung. Neue Bestellungen kommen gerade nicht an. Prüft das WLAN.</div>
 <div class="warn soft" id="warn-off" hidden>Bestellen am Handy ist pausiert. Gäste sehen den Hinweis, direkt bei euch zu bestellen.</div>
@@ -110,6 +146,15 @@ h1, h2, p { margin: 0; }
   <section class="col neu" id="col-neu"><header><h2>Neu</h2><span>0</span></header><div class="list"></div></section>
   <section class="col arbeit" id="col-arbeit"><header><h2>In Arbeit</h2><span>0</span></header><div class="list"></div></section>
   <section class="col fertig" id="col-fertig"><header><h2>Erledigt</h2><span>0</span></header><div class="list"></div></section>
+</main>
+
+<main class="menu" id="menu" hidden>
+  <div class="menu-head">
+    <input id="suche" type="search" placeholder="Position suchen" autocomplete="off" aria-label="Position suchen">
+    <p>Antippen schaltet eine Position auf „heute aus“. Gäste sehen sie dann, können sie aber nicht bestellen. Morgen früh um 4 Uhr ist alles automatisch wieder bestellbar.</p>
+  </div>
+  <div class="aus-leiste" id="aus-leiste" hidden></div>
+  <div id="menu-list"><p class="empty">Karte wird geladen …</p></div>
 </main>
 
 <audio id="ton" src="ton/bestellung.mp3" preload="auto"></audio>
@@ -190,6 +235,7 @@ h1, h2, p { margin: 0; }
     }
     const n = groups['col-neu'].length;
     document.title = (n ? '(' + n + ') ' : '') + 'Theke – NANNI';
+    $('v-best-n').hidden = !n; $('v-best-n').textContent = n; $('v-best-n').className = n ? 'neu' : '';
     $('sw').setAttribute('aria-checked', aktiv);
     $('sw-text').textContent = aktiv ? 'Bestellen am Handy ist an' : 'Bestellen am Handy ist aus';
     $('warn-off').hidden = aktiv;
@@ -233,8 +279,63 @@ h1, h2, p { margin: 0; }
     tick();
   });
 
+  // ---------- Ansicht "Karte": Positionen für heute als aus markieren
+  // Die Positionsnamen kommen aus karte.json (erzeugt von build_menu.py), der Stand aus der Datenbank.
+  let karte = null, aus = new Set(), view = 'best';
+  async function ladeAus() {
+    try {
+      const res = await NANNI.rpc('theke_ausverkauft', { p_key: KEY });
+      if (res.ok) { aus = new Set(res.aus); renderKarte(); }
+    } catch { online(false); }
+  }
+  async function ladeKarte() {
+    if (karte) return;
+    try { karte = await (await fetch('karte.json', { cache: 'no-store' })).json(); }
+    catch { $('menu-list').replaceChildren(el('p', { class: 'empty', text: 'Die Karte konnte nicht geladen werden. Prüft das WLAN und tippt noch einmal auf „Karte“.' })); return; }
+    renderKarte();
+  }
+  function renderKarte() {
+    $('v-karte-n').hidden = !aus.size; $('v-karte-n').textContent = aus.size + ' aus';
+    const leiste = $('aus-leiste');
+    leiste.hidden = !aus.size;
+    leiste.replaceChildren(el('b', { text: 'Heute aus' }), ...[...aus].sort((a, b) => a.localeCompare(b, 'de')).map(name =>
+      el('button', { type: 'button', text: name, 'aria-label': name + ' wieder bestellbar machen', onclick: () => setAus(name, false) })));
+    if (!karte) return;
+    const q = $('suche').value.trim().toLowerCase();
+    const cats = karte.kategorien.map(c => ({ c, items: c.positionen.filter(name => !q || name.toLowerCase().includes(q)) })).filter(x => x.items.length);
+    $('menu-list').replaceChildren(...(cats.length ? cats.map(({ c, items }) => el('section', { class: 'mcat' },
+      el('h2', { text: c.name }),
+      el('div', { class: 'mgrid' }, items.map(name => {
+        const da = !aus.has(name);
+        return el('button', { type: 'button', class: 'item', role: 'switch', 'aria-checked': String(da), onclick: () => setAus(name, da) },
+          el('span', { class: 'n', text: name }), el('span', { class: 's', text: da ? 'bestellbar' : 'heute aus' }), el('span', { class: 'knob' }));
+      })))) : [el('p', { class: 'empty', text: 'Keine Position gefunden.' })]));
+  }
+  async function setAus(name, an) {
+    const vorher = new Set(aus);
+    if (an) aus.add(name); else aus.delete(name);
+    renderKarte();
+    try {
+      const res = await NANNI.rpc('theke_ausverkauft_setzen', { p_key: KEY, p_name: name, p_aus: an });
+      if (res.ok) aus = new Set(res.aus); else aus = vorher;
+    } catch { aus = vorher; online(false); }
+    renderKarte();
+  }
+  function zeige(v) {
+    view = v;
+    $('v-best').setAttribute('aria-selected', String(v === 'best'));
+    $('v-karte').setAttribute('aria-selected', String(v === 'karte'));
+    document.querySelector('.board').hidden = v !== 'best';
+    $('menu').hidden = v !== 'karte';
+    if (v === 'karte') { ladeKarte(); ladeAus(); }
+  }
+  $('v-best').addEventListener('click', () => zeige('best'));
+  $('v-karte').addEventListener('click', () => zeige('karte'));
+  $('suche').addEventListener('input', renderKarte);
+
   render();
   tick();
+  ladeAus();
 })();
 </script>
 </body>

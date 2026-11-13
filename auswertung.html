@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Auswertung – NANNI</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#33261f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%239aae93'/%3E%3Ctext x='32' y='41' font-family='sans-serif' font-size='26' text-anchor='middle' fill='%23fbf7f1'%3EN%3C/text%3E%3C/svg%3E">
+<style>
+@font-face { font-family: "Fraunces"; src: url("fonts/fraunces.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("fonts/jost.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+:root { --cream: #f7f0e6; --paper: #fffaf3; --sage: #9aae93; --sage-soft: #dfe6d9; --sage-deep: #4f6249; --blush-soft: #f8e7e1; --rose: #b05a62; --espresso: #33261f; --muted: #6d5d53; --line: #e4d8c8; --amber: #d49a3a;
+  --serif: "Fraunces", Georgia, serif; --sans: "Jost", "Segoe UI", system-ui, sans-serif; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--espresso); font: 400 17px/1.45 var(--sans); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+h1, h2, p { margin: 0; }
+[hidden] { display: none !important; }
+
+.top { display: flex; align-items: center; gap: 14px 18px; flex-wrap: wrap; background: var(--espresso); color: var(--paper); padding: 12px 20px; padding-top: calc(12px + env(safe-area-inset-top)); }
+.top h1 { font: 450 1.35rem/1 var(--serif); margin-right: auto; }
+.top h1 small { font: 500 .7rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; opacity: .7; margin-left: 10px; }
+.top a { color: var(--paper); font-size: .9rem; opacity: .85; text-underline-offset: 3px; }
+.views { display: inline-flex; background: rgba(255, 255, 255, .1); border-radius: 999px; padding: 4px; gap: 4px; }
+.views button { border: 0; background: transparent; color: var(--paper); border-radius: 999px; padding: 9px 18px; font-size: .95rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.views button[aria-pressed="true"] { background: var(--paper); color: var(--espresso); }
+
+.wrap { width: min(1180px, 100% - 40px); margin: 0 auto; padding: 22px 0 calc(40px + env(safe-area-inset-bottom)); }
+.zeitraum { color: var(--muted); font-size: .95rem; }
+.msg { margin-top: 14px; background: var(--blush-soft); color: #8a3940; border-radius: 12px; padding: 10px 14px; }
+
+.kpis { margin-top: 14px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.kpi { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 16px 18px 14px; }
+.kpi h2 { font: 600 .72rem/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.kpi b { display: block; font: 450 2.3rem/1.1 var(--serif); margin-top: 10px; font-variant-numeric: tabular-nums; }
+.kpi p { font-size: .88rem; color: var(--muted); margin-top: 4px; }
+
+.cols { margin-top: 18px; display: grid; gap: 16px; grid-template-columns: 1.25fr 1fr; align-items: start; }
+.box { background: rgba(255, 250, 243, .55); border: 1px solid var(--line); border-radius: 22px; padding: 14px 18px 16px; }
+.box > h2 { font: 600 .78rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 2px 0 12px; }
+.box + .box { margin-top: 16px; }
+.leer { color: var(--muted); font-size: .95rem; padding: 10px 0; }
+
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { font: 600 .7rem/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 0 6px 8px; }
+th:first-child, td:first-child { text-align: left; padding-left: 0; }
+td { text-align: right; padding: 8px 6px; border-top: 1px dashed var(--line); white-space: nowrap; }
+tr.null td { color: #b4a79c; }
+td.ab { color: var(--rose); }
+
+.bars { display: grid; grid-template-columns: max-content 1fr minmax(2.2em, auto); gap: 6px 10px; align-items: center; font-size: .93rem; font-variant-numeric: tabular-nums; }
+.bars .leer { grid-column: 1 / -1; }
+.bar { display: contents; }
+.bar .l { color: var(--muted); }
+.bar .t { height: 18px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.bar .t i { display: block; height: 100%; background: var(--sage-deep); border-radius: 999px; min-width: 4px; }
+.bar.top .t i { background: var(--amber); }
+.bar .z { text-align: right; font-weight: 500; }
+.hinweis { margin-top: 18px; color: var(--muted); font-size: .88rem; max-width: 60em; }
+
+#tage { overflow-x: auto; }
+@media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .wrap { width: calc(100% - 32px); }
+  .box { padding: 12px 12px 14px; }
+  table { font-size: .9rem; }
+  th { letter-spacing: .02em; font-size: .62rem; padding: 0 3px 8px; }
+  td { padding: 8px 3px; }
+  .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi { padding: 14px 14px 12px; }
+  .kpi h2 { letter-spacing: .08em; }
+  .kpi b { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>NANNI <small>Auswertung</small></h1>
+  <div class="views" id="views">
+    <button type="button" data-t="7" aria-pressed="false">7 Tage</button>
+    <button type="button" data-t="28" aria-pressed="true">28 Tage</button>
+    <button type="button" data-t="90" aria-pressed="false">90 Tage</button>
+  </div>
+  <a href="theke.html">Zur Theke</a>
+</header>
+
+<div class="wrap">
+  <p class="zeitraum" id="zeitraum">Wird geladen …</p>
+  <p class="msg" id="msg" hidden></p>
+
+  <section class="kpis" id="kpis"></section>
+
+  <div class="cols">
+    <section class="box">
+      <h2>Tag für Tag</h2>
+      <div id="tage"></div>
+    </section>
+    <div>
+      <section class="box">
+        <h2 id="std-titel">Bestellungen nach Uhrzeit</h2>
+        <div class="bars" id="stunden"></div>
+      </section>
+      <section class="box">
+        <h2>Nach Bereich</h2>
+        <div class="bars" id="bereiche"></div>
+      </section>
+    </div>
+  </div>
+
+  <p class="hinweis">Gezählt wird alles, was über die Karte am Handy bestellt wurde. Umsatz und Bestellwert ohne abgelehnte Bestellungen; die Beträge kommen aus der Karte, abgerechnet wird wie immer über die Kasse. „Bis zur Annahme“ ist die Zeit vom Abschicken bis zum Tippen auf Annehmen. Die Bestellungen selbst werden nach 30 Tagen gelöscht, diese Zahlen bleiben.</p>
+</div>
+
+<script src="bestellen.config.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let KEY = null; try { KEY = localStorage.getItem('nanni-theke-key'); } catch {}
+  const say = t => { $('msg').textContent = t; $('msg').hidden = !t; };
+  if (!KEY) { $('zeitraum').hidden = true; return say('Zugang fehlt. Öffnet zuerst einmal die Theke über den Theken-Link, danach funktioniert diese Seite auf diesem Gerät.'); }
+
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') n.className = v; else if (k === 'text') n.textContent = v;
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v); else if (v != null && v !== false) n.setAttribute(k, v);
+    }
+    for (const kid of kids.flat()) if (kid != null && kid !== false) n.append(kid);
+    return n;
+  };
+  const euro = c => (c / 100).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  const zahl = (x, d = 0) => x == null ? '–' : Number(x).toLocaleString('de-DE', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const datum = (iso, opts) => new Date(iso + 'T12:00:00').toLocaleDateString('de-DE', opts);
+  const stunde = h => String(h).padStart(2, '0') + ' Uhr';
+
+  let tage = 28;
+  try { tage = +localStorage.getItem('nanni-auswertung-tage') || 28; } catch {}
+  if (![7, 28, 90].includes(tage)) tage = 28;
+
+  function balken(ziel, eintraege, label, hervor) {
+    const max = Math.max(...eintraege.map(e => e[1]), 0);
+    $(ziel).replaceChildren(...(max ? eintraege.map(([k, v]) => el('div', { class: 'bar' + (k === hervor ? ' top' : '') },
+      el('span', { class: 'l', text: label(k) }),
+      el('span', { class: 't' }, v ? el('i', { style: 'width:' + (v / max * 100).toFixed(1) + '%' }) : null),
+      el('span', { class: 'z', text: v }))) : [el('p', { class: 'leer', text: 'Noch keine Bestellungen in diesem Zeitraum.' })]));
+  }
+
+  function render(res) {
+    const g = res.gesamt;
+    $('zeitraum').textContent = 'Letzte ' + tage + ' Tage · ' + datum(res.von, { day: 'numeric', month: 'long' }) + ' bis ' + datum(res.bis, { day: 'numeric', month: 'long', year: 'numeric' })
+      + ' · an ' + g.tage_mit_bestellungen + (g.tage_mit_bestellungen === 1 ? ' Tag' : ' Tagen') + ' wurde über die Karte bestellt';
+    const kpi = (titel, wert, sub) => el('article', { class: 'kpi' }, el('h2', { text: titel }), el('b', { text: wert }), sub ? el('p', { text: sub }) : null);
+    $('kpis').replaceChildren(
+      kpi('Bestellungen', zahl(g.bestellungen), g.tage_mit_bestellungen ? 'im Schnitt ' + zahl(g.bestellungen / g.tage_mit_bestellungen, 1) + ' pro Bestelltag' : ''),
+      kpi('Umsatz über die Karte', euro(g.summe_cent), 'ohne abgelehnte'),
+      kpi('Bestellwert', g.durchschnitt_cent == null ? '–' : euro(g.durchschnitt_cent), 'im Durchschnitt'),
+      kpi('Bis zur Annahme', g.mittel_min_annahme == null ? '–' : zahl(g.mittel_min_annahme, 1) + ' Min', 'im Mittel'),
+      kpi('Abgelehnt', g.anteil_abgelehnt == null ? '–' : zahl(g.anteil_abgelehnt, 1) + ' %', g.abgelehnt + ' von ' + g.bestellungen));
+
+    // Tagesliste, neuester Tag oben
+    const zeilen = [...res.tage].reverse().map(t => el('tr', { class: t.bestellungen ? '' : 'null' },
+      el('td', { text: datum(t.tag, { weekday: 'short', day: '2-digit', month: '2-digit' }) }),
+      el('td', { text: t.bestellungen }),
+      el('td', { text: t.bestellungen ? euro(t.summe_cent) : '–' }),
+      el('td', { text: t.mittel_min_annahme == null ? '–' : zahl(t.mittel_min_annahme, 1) + ' Min' }),
+      el('td', { class: t.abgelehnt ? 'ab' : '', text: t.abgelehnt || '–' })));
+    $('tage').replaceChildren(el('table', {},
+      el('thead', {}, el('tr', {}, ['Tag', 'Bestellt', 'Umsatz', 'Annahme', 'Abgelehnt'].map(h => el('th', { text: h })))),
+      el('tbody', {}, zeilen)));
+
+    // Stunden: von der ersten bis zur letzten Stunde mit Bestellungen, Lücken mit 0
+    const std = Object.entries(g.stunden).map(([h, c]) => [+h, c]);
+    const hs = std.map(e => e[0]);
+    const reihe = [];
+    if (hs.length) for (let h = Math.min(...hs); h <= Math.max(...hs); h++) reihe.push([h, (std.find(e => e[0] === h) || [h, 0])[1]]);
+    $('std-titel').textContent = 'Bestellungen nach Uhrzeit' + (g.staerkste_stunde == null ? '' : ' · am stärksten ' + stunde(g.staerkste_stunde));
+    balken('stunden', reihe, stunde, g.staerkste_stunde);
+    balken('bereiche', Object.entries(g.bereiche).sort((a, b) => b[1] - a[1]), k => k, null);
+  }
+
+  async function load() {
+    document.querySelectorAll('#views button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.t === tage)));
+    try {
+      const res = await NANNI.rpc('theke_auswertung', { p_key: KEY, p_tage: tage });
+      if (!res.ok) return say('Der Zugang gilt nicht mehr. Öffnet die Theke bitte über den aktuellen Theken-Link.');
+      say(''); render(res);
+    } catch { say('Keine Verbindung. Versucht es gleich noch einmal.'); }
+  }
+  document.querySelectorAll('#views button').forEach(b => b.addEventListener('click', () => {
+    tage = +b.dataset.t;
+    try { localStorage.setItem('nanni-auswertung-tage', tage); } catch {}
+    load();
+  }));
+  load();
+})();
+</script>
+</body>
+</html>

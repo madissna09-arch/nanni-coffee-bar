@@ -21,6 +21,10 @@ button.bst-tisch { border: 0; font-family: var(--sans); cursor: pointer; }
 .mi-add.has { background: var(--sage-deep); color: var(--paper); font: 600 .9rem/1 var(--sans); }
 @media (hover: hover) { .mi-add:hover { background: var(--sage-deep); color: var(--paper); } }
 
+/* Position, die die Theke heute als aus markiert hat: sichtbar, aber gedämpft */
+.bst .mi.bst-aus h4, .bst .mi.bst-aus .mi-price, .bst .mi.bst-aus .mi-line, .bst .mi.bst-aus > p { opacity: .45; }
+.mi-aus { flex: none; margin-left: 4px; border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; font: 500 .8rem/1 var(--sans); color: var(--muted); background: var(--cream); white-space: nowrap; }
+
 /* Leiste unten */
 .bst-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 0 12px calc(12px + env(safe-area-inset-bottom)); display: grid; gap: 8px; pointer-events: none; }
 .bst-dock > * { pointer-events: auto; width: min(696px, 100%); margin: 0 auto; }

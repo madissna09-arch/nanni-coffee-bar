@@ -165,6 +165,14 @@ open(os.path.join(HERE, "karte.html"), "w", encoding="utf-8").write(page)
 
 print(f"{len(cats)} Kategorien, {sum(len(all_items(c)) for c in cats)} Positionen -> index.html + karte.html")
 
+# ---------- 2b) karte.json: Positionsnamen je Kategorie fuer den Ausverkauft-Schalter auf theke.html ----------
+# Die Namen muessen genau den data-n-Attributen der Karte entsprechen (die schickt die Gastseite beim Bestellen).
+karte_json = {"stand": menu["stand"],
+              "kategorien": [{"id": c["id"], "name": c["name"], "positionen": [it["name"] for it in all_items(c)]} for c in cats]}
+with open(os.path.join(HERE, "karte.json"), "w", encoding="utf-8") as f:
+    json.dump(karte_json, f, ensure_ascii=False, indent=1)
+    f.write("\n")
+
 
 # ---------- 3) Pruefliste Allergene fuer das Cafe ----------
 alle = [it["name"] for c in cats for it in all_items(c)]

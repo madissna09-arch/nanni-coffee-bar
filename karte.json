@@ -1,0 +1,166 @@
+{
+ "stand": "Oktober 2026",
+ "kategorien": [
+  {
+   "id": "kaffee",
+   "name": "Kaffee",
+   "positionen": [
+    "Café Crema",
+    "Americano",
+    "Espresso",
+    "Espresso Doppio",
+    "Espresso Macchiato",
+    "Cappuccino",
+    "Flat White",
+    "Milchkaffee",
+    "Latte Macchiato",
+    "Kaffee & Kuchen Deal"
+   ]
+  },
+  {
+   "id": "tee-matcha",
+   "name": "Tee & Matcha",
+   "positionen": [
+    "Earl Grey",
+    "Jasmin-Grüntee",
+    "Früchtetee Waldbeere",
+    "Frischer Minztee",
+    "Frischer Ingwer-Zitronentee",
+    "Hot Matcha",
+    "Iced Matcha",
+    "Strawberry Iced Matcha",
+    "Mango Iced Matcha"
+   ]
+  },
+  {
+   "id": "favourites",
+   "name": "Nannis Favourites",
+   "positionen": [
+    "Iced Americano",
+    "Iced Latte",
+    "Iced Vanilla Latte",
+    "Iced Chai Latte",
+    "Chai Latte",
+    "Pumpkin Spice Latte",
+    "Hot Chocolate",
+    "Hot White Chocolate"
+   ]
+  },
+  {
+   "id": "limo",
+   "name": "Hausgemachte Limo",
+   "positionen": [
+    "Pfirsich-Limo",
+    "Zitronen-Minze-Holunder-Limo",
+    "Himbeer-Minze-Holunder-Limo",
+    "Maracuja-Limette-Limo"
+   ]
+  },
+  {
+   "id": "fresh",
+   "name": "Nannis Fresh Bar",
+   "positionen": [
+    "Frisch gepresster Orangensaft",
+    "Beet & Juice",
+    "Berry Banana",
+    "Green Glow",
+    "Mango Sunshine"
+   ]
+  },
+  {
+   "id": "soft",
+   "name": "Kaltgetränke & Wasser",
+   "positionen": [
+    "fritz-kola 0,2 l",
+    "fritz-kola super zero 0,2 l",
+    "fritz-limo Apfel-Kirsch-Holunder 0,2 l",
+    "fritz-spritz Bio-Rhabarberschorle 0,2 l",
+    "Zurück zu den Quellen, still 0,33 l",
+    "Zurück zu den Quellen, sprudelnd 0,33 l"
+   ]
+  },
+  {
+   "id": "fruehstueck",
+   "name": "Good Morning, Nanni",
+   "positionen": [
+    "Rührei Genuss",
+    "Omelett-Bar",
+    "Nannis Brunch-Favourite"
+   ]
+  },
+  {
+   "id": "bowls",
+   "name": "Bowls & Porridge",
+   "positionen": [
+    "Classic Açaí Bowl",
+    "Lotus Crunch Açaí Bowl",
+    "Apfel Crunch Porridge"
+   ]
+  },
+  {
+   "id": "shokupan",
+   "name": "Shokupan Sandwiches",
+   "positionen": [
+    "Nanni Egg Drop",
+    "Halloumi-Honey Drop",
+    "Pastrami New York Style Drop",
+    "Burrata Italia",
+    "Kleine Süßkartoffel-Pommes + Dip"
+   ]
+  },
+  {
+   "id": "pancakes",
+   "name": "Süßkartoffel-Pancakes",
+   "positionen": [
+    "Süßkartoffel-Pancakes mit Halloumi",
+    "Süßkartoffel-Pancakes mit Tofu & Avocado",
+    "Süßkartoffel-Pancakes Vegan Greek",
+    "Süßkartoffel-Pancakes Apple Lotus"
+   ]
+  },
+  {
+   "id": "bagels",
+   "name": "Bagels",
+   "positionen": [
+    "Avocado & Poached Egg",
+    "Smoky Tofu Bagel",
+    "Sucuk Egg Bagel",
+    "Egg Bagel",
+    "Salmon Bagel"
+   ]
+  },
+  {
+   "id": "lunch",
+   "name": "Nannis Lunch Favourites",
+   "positionen": [
+    "Golden Goat Club Sandwich",
+    "Chicken Karaage Burger",
+    "Avocado-Halloumi Burger",
+    "Süßkartoffel-Pommes mit Dip"
+   ]
+  },
+  {
+   "id": "sweets",
+   "name": "Nannis Sweets",
+   "positionen": [
+    "Classic French Toast",
+    "Classy Berry Pancakes",
+    "Bueno Berry Pancakes",
+    "Nannis Vegan Banana Bread"
+   ]
+  },
+  {
+   "id": "waffeln",
+   "name": "Nannis Waffel Specials",
+   "positionen": [
+    "Classic Vegan",
+    "Banana Choc",
+    "Lotus Crunch",
+    "White Bueno Crunch",
+    "Heiße Liebe",
+    "Kirschtraum",
+    "Oreo Berry Banana"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+name: Taeglich pruefen
+
+# Prueft jeden Morgen, ob Seite und Bestell-Datenbank antworten.
+# Der Aufruf der Datenbank haelt das Supabase-Gratis-Projekt zugleich wach.
+# Schlaegt ein Schritt fehl, schlaegt der Job fehl und GitHub schickt eine Mail.
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SEITE: https://madissna09-arch.github.io/nanni-coffee-bar
+      SUPABASE_URL: https://tiylkcjxpsybylnbzakd.supabase.co
+      # Oeffentlicher (publishable) Schluessel, steht ohnehin in bestellen.config.js. Kein Secret.
+      SUPABASE_KEY: sb_publishable_erVLj0RslYDUTxXme9JNQw_JTHhHaE7
+    steps:
+      - name: Karte antwortet mit 200
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 5 "$SEITE/karte.html?web")
+          echo "karte.html?web -> $code"
+          test "$code" = "200"
+
+      - name: Theke antwortet mit 200
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 5 "$SEITE/theke.html")
+          echo "theke.html -> $code"
+          test "$code" = "200"
+
+      - name: Datenbank antwortet auf falschen Code mit ok false
+        run: |
+          antwort=$(curl -sS --fail --max-time 30 --retry 2 --retry-delay 5 \
+            -X POST "$SUPABASE_URL/rest/v1/rpc/tisch_info" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"p_code":"gesundheitscheck-falsch"}')
+          echo "tisch_info -> $antwort"
+          echo "$antwort" | grep -Eq '"ok"[[:space:]]*:[[:space:]]*false'

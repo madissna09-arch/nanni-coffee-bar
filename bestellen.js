@@ -58,9 +58,18 @@
     let cart = store.get(CART, []);
     // Bestellungen bleiben 12 Stunden auf dem Handy sichtbar
     let orders = store.get(ORDERS, []).filter(o => Date.now() - o.ts < 12 * 3600e3);
+    // Positionen, die die Theke heute als aus markiert hat: Stand beim Laden, ergänzt durch Ablehnungen beim Abschicken
+    const aus = new Set(Array.isArray(info.aus) ? info.aus : []);
 
     const dock = el('div', { class: 'bst-dock' });
     document.body.append(dock);
+
+    // Statt Plus-Knopf ein gedämpfter Hinweis "heute aus"
+    function markAus(li) {
+      li.classList.add('bst-aus');
+      if (li._add) { li._add.remove(); li._add = null; }
+      if (!li.querySelector('.mi-aus')) li.querySelector('.mi-top').append(el('span', { class: 'mi-aus', text: 'heute aus' }));
+    }
 
     if (!info.aktiv) {
       document.querySelector('.k-hero').append(el('div', { class: 'bst-pause' }, el('b', { text: 'Bestellen am Handy ist gerade pausiert.' }), 'Bestellt bitte direkt bei uns.'));
@@ -68,6 +77,7 @@
       document.querySelectorAll('.kcat').forEach(sec => {
         const extras = [...sec.querySelectorAll('.extras li[data-n]')].map(li => ({ name: li.dataset.n, cent: +li.dataset.p }));
         sec.querySelectorAll('.mi[data-n]').forEach(li => {
+          if (aus.has(li.dataset.n)) return markAus(li);
           const item = { name: li.dataset.n, cent: +li.dataset.p, desc: li.querySelector('p')?.textContent || '', extras };
           const btn = el('button', { class: 'mi-add', type: 'button', 'aria-label': item.name + ' hinzufügen', onclick: () => openItem(item) }, icon(PLUS));
           li.querySelector('.mi-top').append(btn);
@@ -153,8 +163,26 @@
       drawRow();
       const sum = el('span'), err = el('p', { class: 'bst-err', hidden: true, role: 'alert' });
       const send = el('button', { class: 'bst-btn center', type: 'button', text: 'Bestellung abschicken' });
+      let ausMeldung = false;
+      const fail = msg => { err.textContent = msg; err.hidden = false; send.disabled = false; send.textContent = 'Bestellung abschicken'; };
+      // Positionen, die heute aus sind, aus dem Warenkorb nehmen und klar sagen, was passiert ist
+      const nimmRaus = namen => {
+        for (const n of namen) {
+          aus.add(n);
+          document.querySelectorAll('.mi[data-n]').forEach(li => { if (li.dataset.n === n) markAus(li); });
+        }
+        cart = cart.filter(l => !aus.has(l.name));
+        ausMeldung = !cart.length;
+        save(); draw();
+        fail(namen.join(', ') + (namen.length > 1 ? ' sind heute leider aus und wurden' : ' ist heute leider aus und wurde') + ' aus eurer Bestellung genommen. '
+          + (cart.length ? 'Schaut kurz drüber und schickt den Rest noch einmal ab.' : 'Sucht euch gern etwas anderes aus.'));
+      };
       const draw = () => {
-        if (!cart.length) return s.d.close();
+        if (!cart.length) {
+          if (!ausMeldung) return s.d.close();
+          // leer geworden, weil alles aus war: Meldung stehen lassen, es gibt nichts mehr abzuschicken
+          list.replaceChildren(); sum.textContent = euro(0); send.hidden = true; return;
+        }
         list.replaceChildren(...cart.map(l => el('li', {},
           qty(l.menge, v => { if (v === 0) cart = cart.filter(x => x !== l); else l.menge = v; save(); draw(); }, 0),
           el('div', { class: 't' }, el('b', { text: l.name }), detail(l) ? el('small', { text: detail(l) }) : null),
@@ -165,15 +193,18 @@
       s.foot.append(wahl ? row : null, el('div', { class: 'bst-sum' }, el('span', { text: 'Summe' }), sum), err,
         el('p', { class: 'bst-fine', text: 'Bezahlt wird wie gewohnt bei uns im Café.' }), send);
       send.addEventListener('click', async () => {
+        // schon beim Laden als aus bekannt (z. B. Warenkorb von vorhin): erst rausnehmen, dann bewusst neu abschicken
+        const schonAus = [...new Set(cart.filter(l => aus.has(l.name)).map(l => l.name))];
+        if (schonAus.length) return nimmRaus(schonAus);
         if (!tisch) return openPick(() => { drawRow(); send.click(); });
         send.disabled = true; send.textContent = 'Wird gesendet …'; err.hidden = true;
-        const fail = msg => { err.textContent = msg; err.hidden = false; send.disabled = false; send.textContent = 'Bestellung abschicken'; };
         let res;
         try {
           res = await NANNI.rpc('bestellung_aufgeben', { ...(wahl ? { p_tisch: tisch.id } : {}), p_code: code, p_positionen: cart.map(l => ({
             name: l.name, menge: l.menge, preis_cent: l.cent, notiz: l.notiz, extras: l.extras.map(x => ({ name: x.name, preis_cent: x.cent })) })) });
         } catch { return fail('Keine Verbindung. Prüft kurz euer Netz und versucht es noch einmal.'); }
         if (!res.ok) {
+          if (res.fehler === 'aus' && res.name) return nimmRaus([res.name]);
           return fail({ pausiert: 'Bestellen am Handy ist gerade pausiert. Bestellt bitte direkt bei uns.',
             zuviele: 'Von eurem Tisch warten schon Bestellungen bei uns. Einen Moment, wir sind gleich so weit.',
             tisch: 'Dieser Tisch-Link gilt nicht mehr. Scannt den Code am Tisch bitte noch einmal.' }[res.fehler]
